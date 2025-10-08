@@ -1,5 +1,6 @@
 package com.in28minutes.database.database_demo.jdbc;
 
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.in28minutes.database.database_demo.entity.Person;
 
 //The DAO maps the data and returns an object that we can work with
+//So far, we created methods for retrieving, inserting, deleting, updating. The fundamentals of JDBC are: writing the propper query, 
+//and then filling it in with appropriate data
 @Repository
 public class PersonJdbcDao {
 
@@ -48,10 +51,27 @@ public class PersonJdbcDao {
 
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Person.class), pattern);
 	}
-	
-	//The return type is int because 'update' query returns how many rows were affected
+
+	// The return type is int because 'update' query returns how many rows were
+	// affected
 	public int deleteById(int id) {
 		return jdbcTemplate.update("delete from person where id=?", id);
+	}
+
+	public int insert(Person person) {
+		var sql = "INSERT INTO PERSON (ID,NAME,LOCATION,BIRTH_DATE) VALUES (?, ?, ?, ?)";
+		var insert = new Object[] { person.getId(), person.getName(), person.getLocation(),
+				new Timestamp(person.getBirthDate().getTime()) };
+
+		return jdbcTemplate.update(sql, insert);
+	}
+
+	public int update(Person person) {
+		var sql = "UPDATE PERSON " + "SET NAME = ?, LOCATION = ?, BIRTH_DATE = ? " + "WHERE ID = ?";
+		var insert = new Object[] { person.getName(), person.getLocation(),
+				new Timestamp(person.getBirthDate().getTime()), person.getId() };
+
+		return jdbcTemplate.update(sql, insert);
 	}
 
 }
