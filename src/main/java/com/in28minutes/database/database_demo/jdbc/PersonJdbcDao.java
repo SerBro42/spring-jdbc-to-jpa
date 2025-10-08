@@ -48,5 +48,10 @@ public class PersonJdbcDao {
 
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Person.class), pattern);
 	}
+	
+	//The return type is int because 'update' query returns how many rows were affected
+	public int deleteById(int id) {
+		return jdbcTemplate.update("delete from person where id=?", id);
+	}
 
 }
