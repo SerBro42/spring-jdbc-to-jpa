@@ -2,7 +2,22 @@ package com.in28minutes.database.database_demo.entity;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+// We start implementing JPA. Fist of all, we declare this class as an @Entity, that has a corresponding table in the DB.
+// It is possible that the name of tha table doesn't match. In such cases, we'd add @Table(name="person") annotation.
+@Entity
 public class Person {
+
+	// In a similar manner to the Entity name, the column name may not match the
+	// attribute name. In this case, we'd use @Column(name="name").
+	// The @Id is mandatory to set the primary key.
+	// With the @GeneratedValue annotation, the Id attribute is generated
+	// automatically, instead of having to do it manually.
+	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 	private String location;
@@ -11,6 +26,15 @@ public class Person {
 	public Person(int id, String name, String location, Date birthDate) {
 		super();
 		this.id = id;
+		this.name = name;
+		this.location = location;
+		this.birthDate = birthDate;
+	}
+
+	// Since JPA allows us to autogenerate an ID value, we need another constructor
+	// that doesn't pass the ID.
+	public Person(String name, String location, Date birthDate) {
+		super();
 		this.name = name;
 		this.location = location;
 		this.birthDate = birthDate;
