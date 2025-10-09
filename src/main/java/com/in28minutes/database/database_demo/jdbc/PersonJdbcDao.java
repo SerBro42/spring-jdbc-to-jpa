@@ -1,5 +1,7 @@
 package com.in28minutes.database.database_demo.jdbc;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.in28minutes.database.database_demo.entity.Person;
@@ -21,10 +24,28 @@ public class PersonJdbcDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
+	// We create a custom row mapper for Person to ensure that the data and columns
+	// get mapped properly in case the names of the columns change or are not
+	// spelled exactly as we expected. Useful for cases when table definitions are
+	// not the same as bean definitions.
+	class PersonRowMapper implements RowMapper<Person> {
+
+		@Override
+		public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
+			var person = new Person();
+			person.setId(rs.getInt("id"));
+			person.setName(rs.getString("name"));
+			person.setLocation(rs.getString("location"));
+			person.setBirthDate(rs.getTimestamp("birth_date"));
+			return person;
+		}
+
+	}
+
 	// This method executes a SQL query using the Person class. We map the SQL query
 	// to the person class (bean)
 	public List<Person> findAll() {
-		return jdbcTemplate.query("select * from person", new BeanPropertyRowMapper<>(Person.class));
+		return jdbcTemplate.query("select * from person", new PersonRowMapper());
 	}
 
 	// 'query()' is used to return all. 'queryForObject()' is used to search for a
