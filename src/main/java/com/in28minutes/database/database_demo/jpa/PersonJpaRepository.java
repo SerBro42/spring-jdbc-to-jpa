@@ -27,4 +27,15 @@ public class PersonJpaRepository {
 		return entityManager.find(Person.class, id); // JPA
 	}
 
+	// As far as an entityManager is concerned, there is no difference between
+	// 'update' and 'insert'. Update: there is. In an ideal scenario, we should use
+	// persist() for new objects, and merge() for updates
+	public Person insert(Person person) {
+		return entityManager.merge(person);
+	}
+
+	public Person update(Person person) {
+		return entityManager.merge(person);
+	}
+
 }
