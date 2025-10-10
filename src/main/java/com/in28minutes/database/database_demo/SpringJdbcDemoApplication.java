@@ -13,9 +13,10 @@ import com.in28minutes.database.database_demo.entity.Person;
 import com.in28minutes.database.database_demo.jdbc.PersonJdbcDao;
 
 //CommandLineRunner allows to launch stuff as soon as the applicationContext is ready. It is 
-//used in place of instantiating local variables for applicationContext
-@SpringBootApplication
-public class DatabaseDemoApplication implements CommandLineRunner {
+//used in place of instantiating local variables for applicationContext.
+// We comment out the @SpringBootApplication so that it doesn't get scanned by component scan.
+//@SpringBootApplication
+public class SpringJdbcDemoApplication implements CommandLineRunner {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -23,7 +24,7 @@ public class DatabaseDemoApplication implements CommandLineRunner {
 	PersonJdbcDao dao;
 	
 	public static void main(String[] args) {
-		SpringApplication.run(DatabaseDemoApplication.class, args);
+		SpringApplication.run(SpringJdbcDemoApplication.class, args);
 	}
 
 	@Override
