@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.in28minutes.database.database_demo.entity.Person;
 import com.in28minutes.database.database_demo.jpa.PersonJpaRepository;
@@ -38,11 +36,12 @@ public class JpaDemoApplication2 implements CommandLineRunner {
 		
 		logger.info("Updating 10003 -> {}", 
 				repository.update(new Person(10003, "Jazmine", "Agrabah", new Date())));
+		//We cannot use logger here, because it's a void method
+		repository.deleteById(10002);
+		logger.info("All users -> {}", repository.findAll());
 		
-//		logger.info("All users -> {}", dao.findAll());
 //		logger.info("All users from Orxeta -> {}", dao.findByLocation("Orxeta"));
 //		logger.info("All users containing 'epe' in their name -> {}", dao.findByName(" epe"));
-//		logger.info("Deleting 10002 -> {}", dao.deleteById(10002));
 
 	}
 

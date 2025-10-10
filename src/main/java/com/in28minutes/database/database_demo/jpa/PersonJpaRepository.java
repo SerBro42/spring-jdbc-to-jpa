@@ -1,5 +1,7 @@
 package com.in28minutes.database.database_demo.jpa;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -29,13 +31,26 @@ public class PersonJpaRepository {
 
 	// As far as an entityManager is concerned, there is no difference between
 	// 'update' and 'insert'. Update: there is. In an ideal scenario, we should use
-	// persist() for new objects, and merge() for updates
+	// persist() for new objects, and merge() for updates. The persist() method
+	// returns void, write it the same as delete.
 	public Person insert(Person person) {
 		return entityManager.merge(person);
 	}
 
 	public Person update(Person person) {
 		return entityManager.merge(person);
+	}
+
+	// The JPA mathod to delete a row is remove(), which returns void
+	public void deleteById(int id) {
+		var person = findById(id);
+		entityManager.remove(person);
+	}
+	
+	//JPQL to find all persons
+	public List<Person> findAll() {
+		var namedQuery = entityManager.createNamedQuery("find_all_persons", Person.class);
+		return namedQuery.getResultList();
 	}
 
 }
