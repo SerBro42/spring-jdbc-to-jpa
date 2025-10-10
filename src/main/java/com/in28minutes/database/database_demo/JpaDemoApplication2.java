@@ -37,7 +37,7 @@ public class JpaDemoApplication2 implements CommandLineRunner {
 				repository.insert(new Person("Alicia", "Wonderland", new Date())));
 		
 		logger.info("Updating 10003 -> {}", 
-				repository.update(new Person(10003, "Ignacio", "Bilbao", new Date())));
+				repository.update(new Person(10003, "Jazmine", "Agrabah", new Date())));
 		
 //		logger.info("All users -> {}", dao.findAll());
 //		logger.info("All users from Orxeta -> {}", dao.findByLocation("Orxeta"));
