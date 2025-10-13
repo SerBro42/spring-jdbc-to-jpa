@@ -75,14 +75,14 @@ https://github.com/in28minutes/spring-master-class/blob/master/04-spring-jdbc-to
 Migrated from H2 embedded database to MySQL. All connection data are in application.properties.
 
 # MySQL setup
-Install MySQL https://dev.mysql.com/doc/en/installing.html
-More details - http://www.mysqltutorial.org/install-mysql/
-Trouble Shooting - https://dev.mysql.com/doc/refman/en/problems.html
+- Install MySQL https://dev.mysql.com/doc/en/installing.html
+    - More details - http://www.mysqltutorial.org/install-mysql/
+    - Trouble Shooting - https://dev.mysql.com/doc/refman/en/problems.html
 
-Startup the Server (as a service). You will most likely need admin privileges for this.
+- Startup the Server (as a service). You will most likely need admin privileges for this.
 
-Go to command prompt (or terminal)
-Execute following commands to create a database and a user
+- Go to command prompt (or terminal)
+- Execute following commands to create a database and a user
 ~~~~~~~~~~~~
 mysql --user=user_name --password 
 create database person_example;
