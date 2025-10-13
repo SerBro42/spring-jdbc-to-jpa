@@ -29,13 +29,23 @@ public class SpringDataDemoApplication implements CommandLineRunner {
 	// Instead, we use save()
 	@Override
 	public void run(String... args) throws Exception {
-		logger.info("User id 10001 -> {}", repository.findById(10001));
+		logger.info("User id 10001 -> {}", repository.findById(1));
 
 		logger.info("Inserting -> {}", repository.save(new Person("Alicia", "Wonderland", new Date())));
 
-		logger.info("Updating 10003 -> {}", repository.save(new Person(10003, "Jazmine", "Agrabah", new Date())));
-		// We cannot use logger here, because it's a void method
-		repository.deleteById(10002);
+        repository.findById(3).ifPresentOrElse(person -> {
+            person.setName("Jazmine");
+            person.setLocation("Agrabah");
+            person.setBirthDate(new Date());
+            Person updated = repository.save(person);
+            logger.info("Updating 10003 -> {}", updated);
+        }, () -> {
+            // If the entity doesn't exist, create it
+            Person created = repository.save(new Person("Jazmine", "Agrabah", new Date()));
+            logger.info("Created 10003 -> {}", created);
+        });		
+        // We cannot use logger here, because it's a void method
+		repository.deleteById(2);
 		logger.info("All users -> {}", repository.findAll());
 
 //		logger.info("All users from Orxeta -> {}", dao.findByLocation("Orxeta"));

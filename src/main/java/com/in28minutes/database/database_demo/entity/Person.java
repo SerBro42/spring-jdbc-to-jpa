@@ -4,26 +4,27 @@ import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
-
 
 // We start implementing JPA. Fist of all, we declare this class as an @Entity, that has a corresponding table in the DB.
 // It is possible that the name of tha table doesn't match. In such cases, we'd add @Table(name="person") annotation.
 @Entity
 //Custom named query used exclusively by JPQL in person repository. Queries are done in entities, rather than the DB tables.
-@NamedQuery(name="find_all_persons", query="select p from Person p")
+@NamedQuery(name = "find_all_persons", query = "select p from Person p")
 public class Person {
 
 	// In a similar manner to the Entity name, the column name may not match the
 	// attribute name. In this case, we'd use @Column(name="name").
 	// The @Id is mandatory to set the primary key.
 	// With the @GeneratedValue annotation, the Id attribute is generated
-	// automatically, instead of having to do it manually.
+	// automatically, instead of having to do it manually. Added the
+	// GenerationType.IDENTITY for autoincremental ID.
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String name;
 	private String location;
 	private Date birthDate;
